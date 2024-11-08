@@ -1,0 +1,42 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 400px;
+}
+
+#rating,
+#imdbLink,
+#id,
+#title,
+#description {
+    width: 100%;
+}
+
+#entryForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 10px;
+}
+
+.add-button,
+.display-button {
+    border-radius: 2rem;
+    margin-top: 0.5rem;
+}
+
+.add-button:hover,
+.display-button:hover {
+    cursor: pointer;
+}
+
+.add-button:active,
+.display-button:active {
+    scale: 95%;
+}

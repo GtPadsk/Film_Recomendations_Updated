@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="index.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Add New Entry</h2>
+        <form id="entryForm">
+
+            <input placeholder="Id" type="number" id="id" name="id" required><br><br>
+
+            <input placeholder="Title" type="text" id="title" name="title" required><br><br>
+
+            <input placeholder="Rating" type="number" id="rating" name="rating" min="1" max="10" required><br><br>
+
+            <textarea placeholder="Description" id="description" name="description" required></textarea><br><br>
+
+            <input placeholder="IMDB Link" type="url" id="imdbLink" name="imdbLink" required><br><br>
+
+            <button class="add-button" type="submit">Add Entry</button>
+
+            <button class="display-button" type="button">Display Recommendations</button>
+        </form>
+
+        <div class="entry-list" id="entryList"></div>
+    </div>
+</body>
+
+</html>
