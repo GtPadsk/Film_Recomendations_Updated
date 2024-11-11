@@ -25,13 +25,13 @@ const POST_FILM_RECOMMENDATION = async (req, res) => {
         };
 
         const newFilm = filmRecommendation();
-        const { title, rating, description, imdbLink } = newFilm;
+        // const { title, rating, description, imdbLink } = newFilm;
 
-        if (!title || !rating || !description || !imdbLink) {
+        if (!newFilm.title || !newFilm.rating || !newFilm.description || !newFilm.imdbLink) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
-        const film = new filmModel({ newFilm });
+        const film = new filmModel(newFilm);
         const response = await film.save();
         console.log(response);
 
@@ -45,12 +45,25 @@ const POST_FILM_RECOMMENDATION = async (req, res) => {
 };
 //==============================================
 
-const GET_FILM_RECOMMENDATIONS = (req, res) => {
-    if (filmRecommendations.length === 0) {
-        return res.status(200).json({ message: 'Data does not exist' });
+const GET_FILM_RECOMMENDATIONS = async (req, res) => {
+
+    try {
+        const filmRecommendations = await filmModel.find();
+
+        if (filmRecommendations.length === 0) {
+            return res.status(200).json({ message: 'Data does not exist' });
+        } else {
+            return res.status(200).json({
+                message: 'Successfully retrieved data',
+                data: filmRecommendations
+            })
+        }
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
     }
-    res.json(filmRecommendations);
-};
+}
 
 //==============================================
 
