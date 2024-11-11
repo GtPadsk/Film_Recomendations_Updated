@@ -3,6 +3,7 @@
     "casual": "^1.6.2",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "mongoose": "^8.8.1",
     "uuid": "^11.0.2"
   },
   "name": "3.nodejs_filmrecomendations",

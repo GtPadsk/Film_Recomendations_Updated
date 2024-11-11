@@ -1,38 +1,48 @@
 import { v4 as uuidv4 } from 'uuid';
 import casual from 'casual';
+import filmModel from '../model/task.js';
 
 const usedIds = new Set();
 const filmRecommendations = [];
 
 //==============================================
 
-const POST_FILM_RECOMMENDATION = (req, res) => {
+const POST_FILM_RECOMMENDATION = async (req, res) => {
+    try {
+        const filmRecommendation = () => {
+            let newId = uuidv4();
+            while (usedIds.has(newId)) {
+                newId = uuidv4();
+            }
+            usedIds.add(newId);
+            return {
+                id: newId,
+                title: casual.title,
+                rating: casual.double(0, 10).toFixed(1),
+                description: casual.sentences(2),
+                imdbLink: `https://www.imdb.com/title/tt${casual.integer(1000000, 9999999)}`
+            }
+        };
 
-    const filmRecommendation = () => {
-        let newId = uuidv4();
-        while (usedIds.has(newId)) {
-            newId = uuidv4();
+        const newFilm = filmRecommendation();
+        const { title, rating, description, imdbLink } = newFilm;
+
+        if (!title || !rating || !description || !imdbLink) {
+            return res.status(400).json({ message: 'All fields are required' });
         }
-        usedIds.add(newId);
-        return {
-            id: newId,
-            title: casual.title,
-            rating: casual.double(0, 10).toFixed(1),
-            description: casual.sentences(2),
-            imdbLink: `https://www.imdb.com/title/tt${casual.integer(1000000, 9999999)}`
-        }
-    };
 
-    const newFilm = filmRecommendation();
-    const { title, rating, description, imdbLink } = newFilm;
+        const film = new filmModel({ newFilm });
+        const response = await film.save();
+        console.log(response);
 
-    if (!title || !rating || !description || !imdbLink) {
-        return res.status(400).json({ message: 'All fields are required' });
+        filmRecommendations.push(newFilm);
+        res.status(201).json(newFilm);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'we have some problems' });
     }
-    filmRecommendations.push(newFilm);
-    res.status(201).json(newFilm);
-}
-
+};
 //==============================================
 
 const GET_FILM_RECOMMENDATIONS = (req, res) => {

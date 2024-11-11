@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 
 import taskRouter from "./src/route/task.js";
@@ -8,6 +9,12 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+mongoose
+    .connect("mongodb+srv://padskociusgytis:M257twswCSaS2xN3@cluster0.v1huw.mongodb.net/")
+    .then(() => console.log('Connected!'))
+    .catch(() => console.log('Bad connection'));
+
 
 app.use(taskRouter);
 
