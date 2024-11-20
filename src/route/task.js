@@ -1,4 +1,5 @@
 import express from 'express';
+import auth from '../middleware/auth.js';
 
 import {
     POST_FILM_RECOMMENDATION,
@@ -13,14 +14,14 @@ import {
 
 const router = express.Router();
 
-router.post('/filmRecommendations', POST_FILM_RECOMMENDATION);
-router.get('/filmRecommendations', GET_FILM_RECOMMENDATIONS);
-router.get('/filmRecommendations/:id', GET_FILM_BY_ID);
-router.get('/filmRecommendationsSorted', GET_SORTED_FILMS);
-router.get('/filmRecommendationsHigherThan/:rating', GET_FILM_HIGHER_RATING_THAN);
-router.delete('/filmRecommendations', DELETE_ALL_FILMS);
-router.delete('/filmRecommendations/:id', DELETE_FILM_BY_ID);
-router.put('/filmRecommendations/:id', PUT_UPDATE_FILM_BY_ID);
+router.post('/filmRecommendations', auth, POST_FILM_RECOMMENDATION);
+router.get('/filmRecommendations', auth, GET_FILM_RECOMMENDATIONS);
+router.get('/filmRecommendations/:id', auth, GET_FILM_BY_ID);
+router.get('/filmRecommendationsSorted', auth, GET_SORTED_FILMS);
+router.get('/filmRecommendationsHigherThan/:rating', auth, GET_FILM_HIGHER_RATING_THAN);
+router.delete('/filmRecommendations', auth, DELETE_ALL_FILMS);
+router.delete('/filmRecommendations/:id', auth, DELETE_FILM_BY_ID);
+router.put('/filmRecommendations/:id', auth, PUT_UPDATE_FILM_BY_ID);
 
 
 export default router;

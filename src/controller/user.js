@@ -10,7 +10,8 @@ const SIGN_IN = async (req, res) => {
 
         const { error } = userValidationSchema.validate(req.body);
         if (error) {
-            return res.status(400).json({ message: error.details[0].message });
+            const errorMessage = error.details[0].message;
+            return res.status(400).json({ message: errorMessage });
         }
 
         const salt = bcrypt.genSaltSync(10);
